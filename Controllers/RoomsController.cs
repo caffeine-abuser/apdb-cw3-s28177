@@ -23,6 +23,23 @@ public class RoomsController : ControllerBase
         return Ok(storedRooms);
     }
 
+    [HttpGet]
+    public IActionResult GetRoomByFilters([FromQuery] RoomFilterDTO filters)
+    {
+        if (filters.MinCapacity == null && filters.HasProjector == null && filters.IsActive == null)
+        {
+            return BadRequest("At least one filter query param must be provided.");
+        }
+
+        var filtered = storedRooms.AsQueryable();
+
+        if (filters.MinCapacity != null)  filtered = filtered.Where(r => r.Capacity >= filters.MinCapacity);
+        if (filters.HasProjector != null) filtered = filtered.Where(r => r.HasProjector == filters.HasProjector);
+        if (filters.IsActive != null)     filtered = filtered.Where(r => r.IsActive == filters.IsActive);
+
+        return Ok(filtered.ToList());
+    }
+    
     [HttpGet("{id}")]
     public IActionResult GetRoomById(Guid id)
     {
@@ -53,22 +70,6 @@ public class RoomsController : ControllerBase
         return Ok(filtered.ToList());
     }
 
-    [HttpGet]
-    public IActionResult GetRoomByFilters([FromQuery] RoomFilterDTO filters)
-    {
-        if (filters.MinCapacity == null && filters.HasProjector == null && filters.IsActive == null)
-        {
-            return BadRequest("At least one filter query param must be provided.");
-        }
-
-        var filtered = storedRooms.AsQueryable();
-
-        if (filters.MinCapacity != null)  filtered = filtered.Where(r => r.Capacity >= filters.MinCapacity);
-        if (filters.HasProjector != null) filtered = filtered.Where(r => r.HasProjector == filters.HasProjector);
-        if (filters.IsActive != null)     filtered = filtered.Where(r => r.IsActive == filters.IsActive);
-
-        return Ok(filtered.ToList());
-    }
 
     [HttpPost]
     public IActionResult CreateRoom(RoomDTO data)
