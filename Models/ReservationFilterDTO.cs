@@ -2,12 +2,12 @@ public class ReservationFilterDTO
 {
     public DateOnly? Date { get; set; }
     public ReservationStatus? Status { get; set; }
-    public string? RoomId { get; set; }
+    public Guid? RoomId { get; set; }
 
-    public ReservationFilterDTO(DateOnly date, ReservationStatus status, string roomId)
+    public ReservationFilterDTO(DateOnly date, ReservationStatus status, Guid roomId)
     {
-        this.Date = date;
-        this.Status = status;
+        Date = date;
+        Status = status;
         RoomId = roomId;
     }
 

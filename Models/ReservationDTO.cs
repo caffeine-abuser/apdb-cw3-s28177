@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 public class ReservationDTO
 {
     [Required]
-    public string RoomId { get; set; }
+    public Guid RoomId { get; set; }
     [Required]
     public string OrganizerName { get; set; }
     [Required]
@@ -13,7 +13,7 @@ public class ReservationDTO
     public TimeOnly EndTime { get; set; }
     public ReservationStatus Status { get; set; }
 
-    public ReservationDTO(string roomId, string organizerName, string topic, DateOnly date, TimeOnly startTime, TimeOnly endTime, ReservationStatus status)
+    public ReservationDTO(Guid roomId, string organizerName, string topic, DateOnly date, TimeOnly startTime, TimeOnly endTime, ReservationStatus status)
     {
         RoomId = roomId;
         OrganizerName = organizerName;

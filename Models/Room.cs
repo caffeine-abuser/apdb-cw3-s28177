@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 public class Room
 {
     [Required]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     [Required]
     public string Name { get; set; }
     [Required]
@@ -15,9 +15,9 @@ public class Room
     public bool HasProjector { get; set; }
     public bool IsActive { get; set; }
 
-    public Room(string? id, RoomDTO room)
+    public Room(Guid? id, RoomDTO room)
     {
-        Id = id ?? Guid.NewGuid().ToString();
+        Id = id ?? Guid.NewGuid();
         Name = room.Name;
         BuildingCode = room.BuildingCode;
         Floor = room.Floor;
