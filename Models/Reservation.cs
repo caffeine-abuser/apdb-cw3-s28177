@@ -1,36 +1,23 @@
-public enum ReservationStatus
+public class Reservation
 {
-    PLANNED,
-    CONFIRMED,
-    CANCELLED
-}
+    public string Id { get; set; }
+    public string RoomId { get; set; }
+    public string OrganizerName { get; set; }
+    public string Topic { get; set; }
+    public DateOnly Date { get; set; }
+    public TimeOnly StartTime { get; set; }
+    public TimeOnly EndTime { get; set; }
+    public ReservationStatus Status { get; set; }
 
-public class Reservation(Guid? id, ReservationDTO data)
-{
-    public Guid Id = id ?? new Guid();
-    public Guid RoomId = data.RoomId;
-    public string OrganizerName = data.OrganizerName;
-    public string Topic = data.Topic;
-    public DateOnly Date = data.Date;
-    public DateTime StartTime = data.StartTime;
-    public DateTime EndTime = data.EndTime;
-    public ReservationStatus Status = data.Status;
-}
-
-public class ReservationDTO(Guid roomId, string organizerName, string topic, DateOnly date, DateTime startTime, DateTime endTime, ReservationStatus status)
-{
-    public Guid RoomId = roomId;
-    public string OrganizerName = organizerName;
-    public string Topic = topic;
-    public DateOnly Date = date;
-    public DateTime StartTime = startTime;
-    public DateTime EndTime = endTime;
-    public ReservationStatus Status = status;
-}
-
-public class ReservationFilterDTO(DateOnly date, ReservationStatus status, Guid roomId)
-{
-    public DateOnly date = date;
-    public ReservationStatus status = status;
-    public Guid RoomId = roomId;
+    public Reservation(string? id, ReservationDTO data)
+    {
+        Id = id ?? Guid.NewGuid().ToString();
+        RoomId = data.RoomId;
+        OrganizerName = data.OrganizerName;
+        Topic = data.Topic;
+        Date = data.Date;
+        StartTime = data.StartTime;
+        EndTime = data.EndTime;
+        Status = data.Status;
+    }
 }

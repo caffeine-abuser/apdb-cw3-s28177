@@ -1,36 +1,28 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-public class Room(Guid? id, RoomDTO room)
+public class Room
 {
     [Required]
-    public Guid Id = id ?? new Guid();
+    public string Id { get; set; }
     [Required]
-    public string Name = room.Name;
+    public string Name { get; set; }
     [Required]
-    public string BuildingCode = room.BuildingCode;
-    public int Floor = room.Floor;
+    public string BuildingCode { get; set; }
+    public int Floor { get; set; }
     [Range(1, int.MaxValue)]
-    public int Capacity = room.Capacity;
-    public bool HasProjector = room.HasProjector;
-    public bool IsActive = room.IsActive;
-}
+    public int Capacity { get; set; }
+    public bool HasProjector { get; set; }
+    public bool IsActive { get; set; }
 
-public class RoomDTO(string name, string buildingCode, int floor, int capacity, bool hasProjector, bool isActive)
-{
-    [Required]
-    public string Name = name;
-    [Required]
-    public string BuildingCode = buildingCode;
-    public int Floor = floor;
-    [Range(1, int.MaxValue)]
-    public int Capacity = capacity;
-    public bool HasProjector = hasProjector;
-    public bool IsActive = isActive;
-}
-
-public class RoomFilterDTO(int? minCapacity, bool? hasProjector, bool? isActive)
-{
-    public int? MinCapacity = minCapacity;
-    public bool? HasProjector = hasProjector;
-    public bool? IsActive = isActive;
+    public Room(string? id, RoomDTO room)
+    {
+        Id = id ?? Guid.NewGuid().ToString();
+        Name = room.Name;
+        BuildingCode = room.BuildingCode;
+        Floor = room.Floor;
+        Capacity = room.Capacity;
+        HasProjector = room.HasProjector;
+        IsActive = room.IsActive;
+    }
 }
