@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Components.Endpoints;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apdb_cw3_s28177.Controllers;
@@ -12,11 +11,11 @@ public class RoomsController : ControllerBase
     // quick stats:
     // 5 rooms, 3 active, 2 inactive, 2 with a projector
     public static List<Room> storedRooms = [
-        new Room("4e162f7b-0ac6-4d1e-ab89-1eca2409815f", new RoomDTO("Pokój 031", "HQ-A", 0, 5, false, true)),
-        new Room("e65b80c1-359a-48ce-bc28-9686c60ff4b9", new RoomDTO("Aula", "HQ-A", 1, 175, true, true)),
-        new Room("2a4a3437-fd5a-4007-b43b-306861fb65f0", new RoomDTO("Pokój 114", "HQ-B", 1, 15, false, true)),
-        new Room("9cc5ee87-7846-46ea-a96b-1f268ddc96cb", new RoomDTO("Pokój 503", "HQ-D", 5, 25, false, false)),
-        new Room("281f8eaf-99af-4c5a-95bd-19506451ddd9", new RoomDTO("Pokój 207", "BRANCH-A", 2, 3, true, false))
+        new Room(new Guid("4e162f7b-0ac6-4d1e-ab89-1eca2409815f"), new RoomDTO("Pokój 031", "HQ-A", 0, 5, false, true)),
+        new Room(new Guid("e65b80c1-359a-48ce-bc28-9686c60ff4b9"), new RoomDTO("Aula", "HQ-A", 1, 175, true, true)),
+        new Room(new Guid("2a4a3437-fd5a-4007-b43b-306861fb65f0"), new RoomDTO("Pokój 114", "HQ-B", 1, 15, false, true)),
+        new Room(new Guid("9cc5ee87-7846-46ea-a96b-1f268ddc96cb"), new RoomDTO("Pokój 503", "HQ-D", 5, 25, false, false)),
+        new Room(new Guid("281f8eaf-99af-4c5a-95bd-19506451ddd9"), new RoomDTO("Pokój 207", "BRANCH-A", 2, 3, true, false))
     ];
 
     public RoomsController(ILogger<RoomsController> logger)
@@ -44,7 +43,7 @@ public class RoomsController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetRoomById(Guid id)
     {
-        var filtered = storedRooms.Where(r => r.Id == id.ToString());
+        var filtered = storedRooms.Where(r => r.Id == id);
 
         if (!filtered.Any())
         {
@@ -71,7 +70,6 @@ public class RoomsController : ControllerBase
         return Ok(filtered.ToList());
     }
 
-
     [HttpPost]
     public IActionResult CreateRoom(RoomDTO data)
     {
@@ -88,7 +86,7 @@ public class RoomsController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateRoom(Guid id, RoomDTO room)
     {
-        var filtered = storedRooms.Where(r => r.Id == id.ToString());
+        var filtered = storedRooms.Where(r => r.Id == id);
 
         if (!filtered.Any())
         {
@@ -103,7 +101,7 @@ public class RoomsController : ControllerBase
         }
 
         storedRooms.Remove(filtered.First());
-        var updated = new Room(id.ToString(), room);
+        var updated = new Room(id, room);
         storedRooms.Add(updated);
 
         return Ok();
@@ -112,7 +110,7 @@ public class RoomsController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteRoom(Guid id)
     {
-        var filtered = storedRooms.Where(r => r.Id == id.ToString());
+        var filtered = storedRooms.Where(r => r.Id == id);
 
         if (!filtered.Any())
         {
